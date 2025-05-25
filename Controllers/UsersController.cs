@@ -14,9 +14,10 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll() =>
-        Ok(await _service.GetAllAsync());
-
+    public async Task<IActionResult> GetAll()
+    {
+        return Ok(await _service.GetAllAsync());
+    }
 
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
@@ -30,6 +31,5 @@ public class UsersController : ControllerBase
         {
             return NotFound(new ErrorResponseDto { Message = exception.Message });
         }
-
     }
 }
