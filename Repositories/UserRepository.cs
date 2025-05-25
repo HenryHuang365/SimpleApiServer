@@ -1,4 +1,3 @@
-// Repositories/UserRepository.cs
 using Microsoft.EntityFrameworkCore;
 using SimpleApiServer.Data;
 
@@ -11,17 +10,21 @@ public class UserRepository : IUserRepository
         _db = db;
     }
 
-    public Task<IEnumerable<User>> GetAllAsync() =>
-        Task.FromResult(_db.Users
+    public async Task<IEnumerable<User>> GetAllAsync()
+    {
+        return await _db.Users
             .Include(u => u.Orders)
                 .ThenInclude(o => o.Products)
-            .AsEnumerable());
+            .ToListAsync();
+    }
 
-    public async Task<User?> GetByIdAsync(int id) =>
-        await _db.Users
+    public async Task<User?> GetByIdAsync(int id)
+    {
+        return await _db.Users
             .Include(u => u.Orders)
                 .ThenInclude(o => o.Products)
             .FirstOrDefaultAsync(u => u.Id == id);
+    }
 
     public async Task AddAsync(User user)
     {

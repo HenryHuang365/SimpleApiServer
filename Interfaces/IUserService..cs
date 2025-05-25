@@ -1,4 +1,3 @@
-// Interfaces/IUserService.cs
 public interface IUserService
 {
     Task<IEnumerable<UserProfileDto>> GetAllAsync();
