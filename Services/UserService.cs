@@ -16,6 +16,9 @@ public class UserService : IUserService
     public async Task<UserDto?> GetByIdAsync(int id)
     {
         var user = await _repo.GetByIdAsync(id);
+        if (user == null)
+            throw new NotFoundException($"User with ID {id} not found.");
+
         return user == null ? null : new UserDto(user.Id, user.Name);
     }
 
