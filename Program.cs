@@ -53,27 +53,3 @@ using (var scope = app.Services.CreateScope())
 app.MapControllers();
 
 app.Run();
-
-// ---------------------- USERS ----------------------
-
-// app.MapGet("/users", async (AppDbContext db) =>
-//     await db.Users
-//         .Include(u => u.Orders)
-//             .ThenInclude(o => o.Products)
-//         .Select(u => new
-//         {
-//             u.Id,
-//             u.Name,
-//             Orders = u.Orders.Select(o => new
-//             {
-//                 o.Id,
-//                 o.Date,
-//                 Products = o.Products.Select(p => new
-//                 {
-//                     p.Id,
-//                     p.Name,
-//                     p.Price
-//                 })
-//             })
-//         })
-//         .ToListAsync());
