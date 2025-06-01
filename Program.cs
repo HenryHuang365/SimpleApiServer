@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SimpleApiServer.Data;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllers();
 

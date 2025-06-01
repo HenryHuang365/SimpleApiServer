@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace SimpleApiServer.Controllers;
 
@@ -7,10 +8,12 @@ namespace SimpleApiServer.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly IUserService _service;
+    private readonly IMemoryCache _cache;
 
-    public UsersController(IUserService service)
+    public UsersController(IUserService service, IMemoryCache cache)
     {
         _service = service;
+        _cache = cache;
     }
 
     [HttpGet]

@@ -2,6 +2,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SimpleApiServer.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace SimpleApiServer.Tests.Controllers;
 
@@ -10,12 +11,13 @@ public class UsersControllerTests
 {
     private Mock<IUserService> _mockUserService = null!;
     private UsersController _controller = null!;
+    private IMemoryCache _cache = null!;
 
     [TestInitialize]
     public void Setup()
     {
         _mockUserService = new Mock<IUserService>();
-        _controller = new UsersController(_mockUserService.Object);
+        _controller = new UsersController(_mockUserService.Object, _cache);
     }
 
     [TestMethod]
