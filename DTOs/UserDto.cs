@@ -8,7 +8,7 @@ public class CreateUserDto
 
 public class UserProfileDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
 
@@ -17,10 +17,10 @@ public class UserProfileDto
 
 public class UserDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
 
-    public UserDto(int id, string name)
+    public UserDto(Guid id, string name)
     {
         Id = id;
         Name = name;

@@ -23,7 +23,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById(int id)
+    public async Task<IActionResult> GetUserById(Guid id)
     {
         try
         {
@@ -34,5 +34,12 @@ public class UsersController : ControllerBase
         {
             return NotFound(new ErrorResponseDto { Message = exception.Message });
         }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> createUser([FromBody] CreateUserDto user)
+    {
+        await _service.CreateAsync(user);
+        return Ok();
     }
 }

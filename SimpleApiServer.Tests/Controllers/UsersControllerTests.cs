@@ -26,8 +26,8 @@ public class UsersControllerTests
         // Arrange
         var users = new List<UserProfileDto>
         {
-            new() { Id = 1, Name = "Alice" },
-            new() { Id = 2, Name = "Bob" }
+            new() { Id = new Guid(), Name = "Alice" },
+            new() { Id = new Guid(), Name = "Bob" }
         };
 
         _mockUserService.Setup(s => s.GetAllAsync()).ReturnsAsync(users);
@@ -48,13 +48,14 @@ public class UsersControllerTests
     [TestMethod]
     public async Task GetUserById_ReturnsOkWithUser()
     {
+        var userId = new Guid();
         // Arrange
-        var user = new UserProfileDto { Id = 1, Name = "Charlie" };
+        var user = new UserProfileDto { Id = userId, Name = "Charlie" };
 
-        _mockUserService.Setup(s => s.GetByIdAsync(1)).ReturnsAsync(user);
+        _mockUserService.Setup(s => s.GetByIdAsync(userId)).ReturnsAsync(user);
 
         // Act
-        var result = await _controller.GetUserById(1);
+        var result = await _controller.GetUserById(userId);
 
         // Assert
         var okResult = result as OkObjectResult;
@@ -70,11 +71,11 @@ public class UsersControllerTests
     public async Task GetUserById_ReturnsNotFound_WhenUserNotFound()
     {
         // Arrange
-        _mockUserService.Setup(s => s.GetByIdAsync(It.IsAny<int>()))
+        _mockUserService.Setup(s => s.GetByIdAsync(It.IsAny<Guid>()))
             .ThrowsAsync(new NotFoundException("User not found"));
 
         // Act
-        var result = await _controller.GetUserById(999);
+        var result = await _controller.GetUserById(new Guid());
 
         // Assert
         var notFound = result as NotFoundObjectResult;

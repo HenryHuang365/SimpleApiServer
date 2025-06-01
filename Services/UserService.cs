@@ -29,7 +29,7 @@ public class UserService : IUserService
     }
 
 
-    public async Task<UserProfileDto?> GetByIdAsync(int id)
+    public async Task<UserProfileDto?> GetByIdAsync(Guid id)
     {
         var user = await _repo.GetByIdAsync(id);
         if (user == null)
@@ -54,7 +54,7 @@ public class UserService : IUserService
     }
 
 
-    public async Task<UserDto> CreateAsync(UserDto userDto)
+    public async Task<UserDto> CreateAsync(CreateUserDto userDto)
     {
         var user = new User { Name = userDto.Name };
         await _repo.AddAsync(user);
@@ -63,7 +63,7 @@ public class UserService : IUserService
         return new UserDto(user.Id, user.Name);
     }
 
-    public async Task<bool> UpdateAsync(int id, UserDto userDto)
+    public async Task<bool> UpdateAsync(Guid id, UserDto userDto)
     {
         var user = await _repo.GetByIdAsync(id);
         if (user == null) return false;
@@ -73,7 +73,7 @@ public class UserService : IUserService
         return true;
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(Guid id)
     {
         var user = await _repo.GetByIdAsync(id);
         if (user == null) return false;
