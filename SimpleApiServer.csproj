@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -20,6 +22,7 @@
     <PackageReference Include="MSTest.TestAdapter" Version="3.9.0" />
     <PackageReference Include="MSTest.TestFramework" Version="3.9.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="8.0.3" />
   </ItemGroup>
 
 </Project>

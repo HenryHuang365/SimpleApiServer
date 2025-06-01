@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Swashbuckle.AspNetCore.Filters;
+using System.ComponentModel;
 
 namespace SimpleApiServer.Controllers;
 
@@ -16,14 +18,25 @@ public class UsersController : ControllerBase
         _cache = cache;
     }
 
+    /// <summary>
+    /// Gets all users.
+    /// </summary>
     [HttpGet]
+    [ProducesResponseType(typeof(UserProfileDto[]), StatusCodes.Status201Created)]
     public async Task<IActionResult> GetAll()
     {
         return Ok(await _service.GetAllAsync());
     }
 
+    /// <summary>
+    /// Gets a user by id.
+    /// </summary>
+    /// <param name="id">The id of the user to find.</param>
+    /// <returns>User details</returns>
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetUserById(Guid id)
+    [ProducesResponseType(typeof(UserProfileDto), StatusCodes.Status201Created)]
+    public async Task<IActionResult> GetUserById(
+    [DefaultValue("6b6502d5-a2de-4f2e-ab8d-0c74c6ad8dff")] Guid id)
     {
         try
         {
@@ -36,10 +49,15 @@ public class UsersController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Create a new user
+    /// </summary>
     [HttpPost]
+    [SwaggerRequestExample(typeof(CreateUserDto), typeof(CreateUserDtoExample))]
+    [ProducesResponseType(typeof(UserDto), StatusCodes.Status201Created)]
     public async Task<IActionResult> createUser([FromBody] CreateUserDto user)
     {
-        await _service.CreateAsync(user);
-        return Ok();
+        var newUser = await _service.CreateAsync(user);
+        return Ok(newUser);
     }
 }
